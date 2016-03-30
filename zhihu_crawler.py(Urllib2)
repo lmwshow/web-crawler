@@ -1,0 +1,73 @@
+#coding=utf-8
+import urllib2
+import urllib
+import re
+import cookielib
+import zlib
+import time
+
+
+def ungizp(data):                                                                     #网页使用gzip编码，进行解码
+    data = zlib.decompress(data, 16+zlib.MAX_WBITS)
+    return data
+
+
+def getXSRF(data):
+    cer = re.compile('name=\"_xsrf" value=\"(.*)\"')
+    strlist = cer.findall(data)
+    return strlist[0]
+
+def getOpener(head):
+    cj = cookielib.CookieJar()
+    cookie_support = urllib2.HTTPCookieProcessor(cj)
+    header = []
+    opener = urllib2.build_opener(cookie_support)
+    for key,value in head.items():
+        elem = (key,value)
+        header.append(elem)
+    opener.addheaders = header
+    return opener
+
+header = {
+    'Connection': 'Keep-Alive',
+    'Accept': '*/*',
+    'Referer': 'http://www.zhihu.com/#signin',
+    'Accept-Language': 'zh-CN',
+    'Accept-Encoding': 'gzip, deflate',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+    'Host': 'www.zhihu.com',
+    'DNT': '1'
+}
+
+url = 'http://www.zhihu.com/'
+opener = getOpener(header)
+op = opener.open(url)
+gzipped = op.headers.get('Content-Encoding')
+data = op.read()
+
+if gzipped == 'gzip':
+    data = ungizp(data)
+xsrf = getXSRF(data)
+
+url +='login/email'
+id = '397546139@qq.com'
+password = 'womenyiqi1314'
+postDict = {
+    '_xsrf' :xsrf,
+    'password' : password,
+    'remember_me' : 'true',
+    'email' : id
+}
+
+postData = urllib.urlencode(postDict)
+op = opener.open(url,postData)
+data = op.read()
+data = ungizp(data)
+
+# print(data)
+
+url = 'https://www.zhihu.com/#signin'
+op = opener.open(url)
+data = op.read()
+data = ungizp(data)
+print(data)

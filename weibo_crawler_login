@@ -37,8 +37,8 @@ header = {
 }
 
 postDict = {
-    'username':'397546139@qq.com',
-    'password':'lmw123456',
+    'username':'******',
+    'password':'******',
     'savestate':'1',
     'ec':'0',
     'pagerefer':'https://passport.weibo.cn/signin/welcome?entry=mweibo&r=http%3A%2F%2Fm.weibo.cn%2F&wm=3349&vt=4',

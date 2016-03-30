@@ -32,7 +32,7 @@ xsrf = getXSRF(data)
 print xsrf                                                                  #提交的表单中的xsrf 需要我们从首页提取
 
 url +='login/email'
-id = '39*****39@qq.com'
+id = '*****@qq.com'
 password = '**********'
 postDict = {
     '_xsrf' :xsrf,

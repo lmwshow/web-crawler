@@ -50,8 +50,8 @@ if gzipped == 'gzip':
 xsrf = getXSRF(data)
 
 url +='login/email'
-id = '397546139@qq.com'
-password = 'womenyiqi1314'
+id = '********'
+password = '*********'
 postDict = {
     '_xsrf' :xsrf,
     'password' : password,
